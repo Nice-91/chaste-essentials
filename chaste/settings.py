@@ -157,13 +157,14 @@ CSRF_TRUSTED_ORIGINS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'chaste_db',  
-        'USER': 'chaste_db_user',  
-        'PASSWORD': 'Dwkt8sXoC67YfhJAt945PFsUrThw2cBt',  
-        'HOST': 'dpg-d5pj5rjuibrs73d1pmhg-a',  
+        'NAME': 'chaste_db',
+        'USER': 'chaste_db_user',
+        'PASSWORD': 'Dwkt8sXoC67YfhJAt945PFsUrThw2cBt',
+        'HOST': 'dpg-d5pj5rjuibrs73d1pmhg-a.render.com',  # Full hostname!
         'PORT': '5432',
     }
 }
+
 
 
 
