@@ -160,7 +160,7 @@ DATABASES = {
         'NAME': 'chaste_db',  
         'USER': 'chaste_db_user',  
         'PASSWORD': 'Dwkt8sXoC67YfhJAt945PFsUrThw2cBt',  
-        'HOST': 'dpg-d5pj5rjuibrs73d1pmhg-a.render.com',  
+        'HOST': 'dpg-d5pj5rjuibrs73d1pmhg-a',  
         'PORT': '5432',
     }
 }
