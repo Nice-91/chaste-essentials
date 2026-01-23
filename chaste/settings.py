@@ -105,6 +105,12 @@ DATABASES = {
     )
 }
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('dpp3ijqpt'),
+    'API_KEY': os.environ.get('851851329867321'),
+    'API_SECRET': os.environ.get('**********'),
+}
+
 
 # =====================
 # PASSWORD VALIDATION
@@ -138,9 +144,11 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # =====================
 # MEDIA
 # =====================
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = BASE_DIR / "media"
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # =====================
 # CORS & CSRF
