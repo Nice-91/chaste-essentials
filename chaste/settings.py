@@ -26,13 +26,14 @@ SECRET_KEY = 'django-insecure-47bsqwhq!&o56hxt$jmy5x-k%#b5kxp(h7o=^+r@d6jipx$0q!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "chaste-essentials-1.onrender.com",
 ]
 
+
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,23 +42,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third-party apps
     'rest_framework',
-    'products',
     'corsheaders',
     'rest_framework.authtoken',
+
+    # Your apps
+    'products',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 ]
 
 ROOT_URLCONF = 'chaste.urls'
@@ -65,7 +69,7 @@ ROOT_URLCONF = 'chaste.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],  # add template dirs here if you have any
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,28 +84,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'chaste.wsgi.application'
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # Change to your production DB if needed
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://chaste-essentialss.vercel.app",  
-]
-
-
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Enable WhiteNoise’s compression and caching support
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Password validation
@@ -138,22 +129,37 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# WhiteNoise configuration to serve static files efficiently
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+# Media files (for user uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://chaste-essentialss.vercel.app",
+]
+
+
+# Django REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
 }
 
+
+# Security settings when behind proxy/load balancer (like on Render)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Logging - logs errors to console (adjust level for more details)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -164,6 +170,10 @@ LOGGING = {
     },
     "root": {
         "handlers": ["console"],
-        "level": "ERROR",  # or "DEBUG" for even more info
+        "level": "ERROR",  # Change to DEBUG for detailed logs during troubleshooting
     },
 }
+
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
