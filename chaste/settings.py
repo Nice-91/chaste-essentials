@@ -29,12 +29,9 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "https://chaste-essentials-1.onrender.com/"
+    "chaste-essentials-1.onrender.com",
 ]
 
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -94,7 +91,9 @@ DATABASES = {
 }
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://chaste-essentialss.vercel.app",  
 ]
+
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -148,3 +147,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
