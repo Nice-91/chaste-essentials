@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     # Local apps
     'products',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 
@@ -202,3 +204,5 @@ LOGGING = {
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
