@@ -108,7 +108,7 @@ DATABASES = {
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('dpp3ijqpt'),
     'API_KEY': os.environ.get('851851329867321'),
-    'API_SECRET': os.environ.get('**********'),
+    'API_SECRET': os.environ.get('qRjnRocNOi08lL2LG9HrnaypVl4'),
 }
 
 
