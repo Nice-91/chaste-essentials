@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "chaste-essentials-1.onrender.com",
+    "chaste-essentialss.vercel.app"
 ]
 
 # =====================
