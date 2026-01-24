@@ -48,7 +48,7 @@ class ProductViewSet(ModelViewSet):
         Public users can READ products.
         Admin only can CREATE / UPDATE / DELETE.
         """
-        if self.request.method in ["GET"]:
+        if self.request.method == ["GET"]:
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
