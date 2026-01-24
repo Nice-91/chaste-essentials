@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Product
+import cloudinary
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -12,8 +13,9 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_image(self, obj):
         if obj.image:
             try:
-                # Use obj.image.url directly if available
-                return obj.image.url
+                # Generate the Cloudinary URL dynamically from the public_id
+                url, _ = cloudinary.utils.cloudinary_url(obj.image.public_id)
+                return url
             except Exception as e:
                 print(f"Cloudinary error: {e}")
                 return None
