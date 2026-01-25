@@ -34,7 +34,6 @@ class AdminLoginView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
-        # Optional: restrict to staff/superuser
         if not user.is_staff:
             return Response(
                 {"message": "You are not allowed to access admin"},
@@ -57,15 +56,19 @@ class AdminLoginView(APIView):
 # PRODUCTS
 # ======================
 class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all().order_by("-id")
     serializer_class = ProductSerializer
-    queryset = Product.objects.all().order_by('-id')
     parser_classes = [MultiPartParser, FormParser]
 
     def get_permissions(self):
-        if self.request.method in ['GET', 'HEAD', 'OPTIONS']:
+        """
+        Public: GET
+        Admin: POST, PUT, PATCH, DELETE
+        """
+        if self.request.method in ["GET", "HEAD", "OPTIONS"]:
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
-    
+
     def get_queryset(self):
         queryset = Product.objects.all().order_by("-id")
 
@@ -74,3 +77,9 @@ class ProductViewSet(ModelViewSet):
             queryset = queryset.filter(category=category)
 
         return queryset
+
+    # 🔥 THIS IS THE KEY FIX 🔥
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context

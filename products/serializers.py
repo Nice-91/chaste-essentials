@@ -3,13 +3,14 @@ from .models import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(required=False)  # Accept image uploads
+    image = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'price', 'category', 'description', 'image']
+        fields = "__all__"
 
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        ret['image'] = instance.image.url if instance.image else None
-        return ret
+    def get_image(self, obj):
+        request = self.context.get("request")
+        if obj.image and request:
+            return request.build_absolute_uri(obj.image.url)
+        return None
