@@ -20,6 +20,12 @@ class AdminLoginView(APIView):
         username = request.data.get("username")
         password = request.data.get("password")
 
+        if not username or not password:
+            return Response(
+                {"message": "Username and password are required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         user = authenticate(username=username, password=password)
 
         if user is None:
@@ -28,12 +34,23 @@ class AdminLoginView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
+        # Optional: restrict to staff/superuser
+        if not user.is_staff:
+            return Response(
+                {"message": "You are not allowed to access admin"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         token, _ = Token.objects.get_or_create(user=user)
 
-        return Response({
-            "token": token.key,
-            "username": user.username
-        }, status=status.HTTP_200_OK)
+        return Response(
+            {
+                "token": token.key,
+                "username": user.username,
+                "is_staff": user.is_staff,
+            },
+            status=status.HTTP_200_OK
+        )
 
 
 # ======================
@@ -41,14 +58,15 @@ class AdminLoginView(APIView):
 # ======================
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
+    queryset = Product.objects.all().order_by("-id")
     parser_classes = [MultiPartParser, FormParser]
 
     def get_permissions(self):
         """
-        Public users can READ products.
-        Admin only can CREATE / UPDATE / DELETE.
+        ✅ Public users: READ (GET)
+        🔒 Admin only: CREATE / UPDATE / DELETE
         """
-        if self.request.method == ["GET"]:
+        if self.request.method in ["GET", "HEAD", "OPTIONS"]:
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
