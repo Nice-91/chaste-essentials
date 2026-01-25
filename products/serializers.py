@@ -12,11 +12,5 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         if obj.image:
-            try:
-                # Generate the Cloudinary URL dynamically from the public_id
-                url, _ = cloudinary.utils.cloudinary_url(obj.image.public_id)
-                return url
-            except Exception as e:
-                print(f"Cloudinary error: {e}")
-                return None
+            return obj.image.url
         return None
