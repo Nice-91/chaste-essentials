@@ -7,10 +7,22 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = "__all__"
+        fields = [
+            "id",
+            "name",
+            "price",
+            "category",
+            "description",
+            "image",
+        ]
 
     def get_image(self, obj):
         request = self.context.get("request")
-        if obj.image and request:
+
+        if not obj.image:
+            return None
+
+        if request:
             return request.build_absolute_uri(obj.image.url)
-        return None
+
+        return obj.image.url
