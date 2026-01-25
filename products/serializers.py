@@ -1,16 +1,18 @@
 from rest_framework import serializers
 from .models import Product
-import cloudinary
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
+    image = serializers.ImageField(required=False)  # <-- Use ImageField here
 
     class Meta:
         model = Product
         fields = ['id', 'name', 'price', 'category', 'description', 'image']
 
-    def get_image(self, obj):
-        if obj.image:
-            return obj.image.url
-        return None
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        if instance.image:
+            rep['image'] = instance.image.url
+        else:
+            rep['image'] = None
+        return rep
