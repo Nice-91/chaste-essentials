@@ -25,14 +25,20 @@ SECRET_KEY = os.environ.get(
     "django-insecure-unsafe-dev-key"
 )
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = os.environ.get("DEBUG", "False") == "False"
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
+
+    # Render domains (IMPORTANT)
+    "chaste-essentials.onrender.com",
     "chaste-essentials-1.onrender.com",
-    "chaste-essentialss.vercel.app"
+
+    # Frontend
+    "chaste-essentialss.vercel.app",
 ]
+
 
 # =====================
 # APPLICATIONS
