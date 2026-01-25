@@ -3,7 +3,7 @@ from .models import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
+    image = serializers.ImageField(required=True)
 
     class Meta:
         model = Product
@@ -15,14 +15,3 @@ class ProductSerializer(serializers.ModelSerializer):
             "description",
             "image",
         ]
-
-    def get_image(self, obj):
-        request = self.context.get("request")
-
-        if not obj.image:
-            return None
-
-        if request:
-            return request.build_absolute_uri(obj.image.url)
-
-        return obj.image.url
