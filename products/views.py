@@ -58,18 +58,14 @@ class AdminLoginView(APIView):
 # ======================
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
-    queryset = Product.objects.all().order_by("-id")
+    queryset = Product.objects.all().order_by('-id')
     parser_classes = [MultiPartParser, FormParser]
 
     def get_permissions(self):
-        """
-        ✅ Public users: READ (GET)
-        🔒 Admin only: CREATE / UPDATE / DELETE
-        """
-        if self.request.method in ["GET", "HEAD", "OPTIONS"]:
+        if self.request.method in ['GET', 'HEAD', 'OPTIONS']:
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
-
+    
     def get_queryset(self):
         queryset = Product.objects.all().order_by("-id")
 
